@@ -1,0 +1,57 @@
+{
+  "jobs": [
+    {
+      "job_id": "J001",
+      "service_type": "입주청소",
+      "lat": 37.4979,
+      "lng": 127.0276,
+      "date": "2024-01-15",
+      "duration_min": 180,
+      "time_fixed": true,
+      "fixed_start_time": "10:00"
+    },
+    {
+      "job_id": "J002",
+      "service_type": "입주청소",
+      "lat": 37.5000,
+      "lng": 127.0300,
+      "date": "2024-01-15",
+      "duration_min": 240,
+      "time_fixed": false,
+      "slot_type": "AFTERNOON"
+    },
+    {
+      "job_id": "J003",
+      "service_type": "에어컨청소",
+      "lat": 37.4837,
+      "lng": 126.9974,
+      "date": "2024-01-16",
+      "duration_min": 120,
+      "time_fixed": true,
+      "fixed_start_time": "14:00"
+    }
+  ],
+  "technicians": [
+    {
+      "technician_id": "T001",
+      "home_lat": 37.4980,
+      "home_lng": 127.0280,
+      "service_types": ["입주청소", "이사청소"],
+      "overtime_allowed": true
+    },
+    {
+      "technician_id": "T002",
+      "home_lat": 37.4840,
+      "home_lng": 127.0000,
+      "service_types": ["에어컨청소", "청소청소"],
+      "overtime_allowed": false
+    }
+  ],
+  "technician_states": [],
+  "system_rules": {
+    "work_start": "09:00",
+    "work_end": "18:00",
+    "max_preassign_days": 3,
+    "default_buffer_min": 30
+  }
+}
