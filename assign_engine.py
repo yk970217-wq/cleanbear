@@ -404,16 +404,24 @@ if FLASK_AVAILABLE:
             engine = AssignmentEngine(works, techs, techoffs, servicetimes, last_index)
             results, new_last_index = engine.assign(cp_level=cp_level)
             
+            # Make 호환 형식으로 변환: results 배열만 반환 (rowNumber, assigned_tech_id만)
+            make_results = []
+            for r in results:
+                make_result = {
+                    "rowNumber": r.get("rowNumber")
+                }
+                # assigned_tech_id가 있을 때만 추가 (배정 성공한 경우만)
+                if "assigned_tech_id" in r:
+                    make_result["assigned_tech_id"] = r["assigned_tech_id"]
+                make_results.append(make_result)
+            
             return jsonify({
-                "success": True,
-                "results": results,
-                "new_last_index": new_last_index
+                "results": make_results
             })
         
         except Exception as e:
             return jsonify({
-                "success": False,
-                "error": str(e)
+                "results": []
             }), 400
 
 
