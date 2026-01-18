@@ -407,12 +407,14 @@ if FLASK_AVAILABLE:
             # Make 호환 형식으로 변환: results 배열만 반환 (rowNumber, assigned_tech_id만)
             make_results = []
             for r in results:
+                row_number = r.get("rowNumber")
+                assigned_tech_id = r.get("assigned_tech_id")  # 배정된 기사 ID 확보
+                
+                # rowNumber와 assigned_tech_id를 포함한 결과 추가
                 make_result = {
-                    "rowNumber": r.get("rowNumber")
+                    "rowNumber": row_number,
+                    "assigned_tech_id": assigned_tech_id  # assigned_tech_id가 None이어도 포함
                 }
-                # assigned_tech_id가 있을 때만 추가 (배정 성공한 경우만)
-                if "assigned_tech_id" in r:
-                    make_result["assigned_tech_id"] = r["assigned_tech_id"]
                 make_results.append(make_result)
             
             return jsonify({
