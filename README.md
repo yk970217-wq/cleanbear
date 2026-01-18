@@ -45,13 +45,24 @@ $env:KAKAO_API_KEY="your_api_key_here"
 
 ## 사용법
 
-### HTTP 서버 실행
+### 로컬 개발 서버 실행
 
 ```bash
 python main.py
 ```
 
-기본 포트: 5000
+기본 포트: 5000 (PORT 환경변수로 변경 가능)
+
+### Render 배포
+
+**Start Command:**
+```bash
+gunicorn main:app --bind 0.0.0.0:$PORT
+```
+
+**환경변수:**
+- `KAKAO_API_KEY`: 카카오맵 API 키 (필수)
+- `PORT`: Render에서 자동 설정됨
 
 ### 입력 JSON 형식 (Make 데이터 계약)
 
@@ -153,7 +164,7 @@ curl -X POST http://localhost:5000/assign \
 
 ## 파일 구조
 
-- `main.py`: HTTP API 서버 (Flask 기반)
+- `main.py`: HTTP API 서버 (Flask 기반, gunicorn으로 배포)
 - `models.py`: 데이터 모델 정의 (Job, Technician, Assignment 등)
 - `scheduler.py`: 배정 알고리즘 핵심 로직
 - `kakao_api.py`: 카카오맵 길찾기 API 연동 (좌표 기반)
