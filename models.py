@@ -20,8 +20,7 @@ class Job:
     """작업 정보 (Make 계약)"""
     job_id: str  # 필수
     service_type: str  # 필수
-    lat: float  # 필수
-    lng: float  # 필수
+    address: str  # 필수 (고객 주소)
     date: date  # 필수 (YYYY-MM-DD)
     duration_min: int  # 필수 (분)
     
@@ -44,10 +43,14 @@ class Job:
 class Technician:
     """기사 정보 (Make 계약)"""
     technician_id: str  # 필수
-    home_lat: float  # 필수
-    home_lng: float  # 필수
+    home_address: str  # 필수 (집 주소)
     service_types: List[str]  # 필수
     overtime_allowed: bool  # 필수
+    # 추가 필드 (Google Sheets용)
+    name: str = ""
+    phone: str = ""
+    area: str = ""
+    priority: int = 0  # 우선순위 (높을수록 우선)
     
     def can_handle_service(self, service_type: str) -> bool:
         """특정 서비스 종류를 처리할 수 있는지"""
@@ -58,8 +61,7 @@ class Technician:
 class TechnicianState:
     """기사 현재 상태 (Make 계약 - 선택적)"""
     technician_id: str
-    last_lat: Optional[float] = None
-    last_lng: Optional[float] = None
+    last_address: Optional[str] = None  # 마지막 작업 주소
     last_end_time: Optional[str] = None  # ISO string
 
 
@@ -106,8 +108,7 @@ class Assignment:
             "technician_id": self.technician.technician_id,
             "date": self.job.date.isoformat(),
             "service_type": self.job.service_type,
-            "lat": self.job.lat,
-            "lng": self.job.lng,
+            "address": self.job.address,
             "duration_min": self.job.duration_min,
             "travel_time_minutes": round(self.travel_time_minutes, 1),
             "status": self.status,
@@ -145,8 +146,7 @@ class Assignment:
 class TechnicianWorkingState:
     """기사 작업 상태 (배정 진행 중)"""
     technician: Technician
-    current_lat: float  # 현재 위치 (위도)
-    current_lng: float  # 현재 위치 (경도)
+    current_address: str  # 현재 위치 (주소)
     assignments_by_date: dict = field(default_factory=dict)  # 날짜별 배정 목록 {date: [Assignment]}
     last_work_end_time: Optional[str] = None  # 마지막 작업 종료 시간 (HH:MM)
     last_work_date: Optional[date] = None  # 마지막 작업 날짜

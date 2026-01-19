@@ -30,18 +30,15 @@ class Scheduler:
         for technician in technicians:
             state = state_dict.get(technician.technician_id)
             
-            # 현재 위치 결정: technician_state의 last_lat/lng 또는 home_lat/lng
-            if state and state.last_lat is not None and state.last_lng is not None:
-                current_lat = state.last_lat
-                current_lng = state.last_lng
+            # 현재 위치 결정: technician_state의 last_address 또는 home_address
+            if state and state.last_address:
+                current_address = state.last_address
             else:
-                current_lat = technician.home_lat
-                current_lng = technician.home_lng
+                current_address = technician.home_address
             
             self.working_states[technician.technician_id] = TechnicianWorkingState(
                 technician=technician,
-                current_lat=current_lat,
-                current_lng=current_lng,
+                current_address=current_address,
                 last_work_end_time=state.last_end_time if state else None
             )
     
@@ -114,12 +111,10 @@ class Scheduler:
         best_travel_time = 0.0
         
         for working_state in assignable_states:
-            # 좌표 기반 거리 계산
+            # 주소 기반 거리 계산
             travel_time = calculate_travel_time(
-                working_state.current_lat,
-                working_state.current_lng,
-                job.lat,
-                job.lng
+                working_state.current_address,
+                job.address
             )
             
             # 시간 체크
@@ -318,8 +313,7 @@ class Scheduler:
         # 임시 Technician 객체 생성
         dummy_technician = Technician(
             technician_id="FAILED",
-            home_lat=0.0,
-            home_lng=0.0,
+            home_address="",
             service_types=[],
             overtime_allowed=False
         )
@@ -344,8 +338,7 @@ class Scheduler:
         working_state.add_assignment(assignment)
         
         # 위치 업데이트 (작업 위치로)
-        working_state.current_lat = assignment.job.lat
-        working_state.current_lng = assignment.job.lng
+        working_state.current_address = assignment.job.address
         
         # 마지막 작업 시간은 estimated_end_time이 있을 때만 업데이트
         if assignment.estimated_end_time:

@@ -3,8 +3,7 @@
     {
       "job_id": "J001",
       "service_type": "입주청소",
-      "lat": 37.4979,
-      "lng": 127.0276,
+      "address": "서울시 강남구 테헤란로 123",
       "date": "2024-01-15",
       "duration_min": 180,
       "time_fixed": true,
@@ -13,8 +12,7 @@
     {
       "job_id": "J002",
       "service_type": "입주청소",
-      "lat": 37.5000,
-      "lng": 127.0300,
+      "address": "서울시 강남구 역삼동 456",
       "date": "2024-01-15",
       "duration_min": 240,
       "time_fixed": false,
@@ -23,8 +21,7 @@
     {
       "job_id": "J003",
       "service_type": "에어컨청소",
-      "lat": 37.4837,
-      "lng": 126.9974,
+      "address": "서울시 서초구 반포대로 789",
       "date": "2024-01-16",
       "duration_min": 120,
       "time_fixed": true,
@@ -34,15 +31,13 @@
   "technicians": [
     {
       "technician_id": "T001",
-      "home_lat": 37.4980,
-      "home_lng": 127.0280,
+      "home_address": "서울시 강남구 역삼동 100",
       "service_types": ["입주청소", "이사청소"],
       "overtime_allowed": true
     },
     {
       "technician_id": "T002",
-      "home_lat": 37.4840,
-      "home_lng": 127.0000,
+      "home_address": "서울시 서초구 반포동 200",
       "service_types": ["에어컨청소", "청소청소"],
       "overtime_allowed": false
     }

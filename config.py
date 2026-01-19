@@ -3,8 +3,10 @@
 """
 import os
 
-# 카카오맵 API 키 - 환경변수에서 읽기 (없으면 기본값 사용, 운영 환경에서는 반드시 환경변수 설정)
-KAKAO_API_KEY = os.environ.get("KAKAO_API_KEY", "479a1197cfb065ae1b6889fbc937549e")
+# 카카오맵 API 키 - 환경변수에서 읽기 (필수, 없으면 에러)
+KAKAO_API_KEY = os.environ.get("KAKAO_API_KEY")
+if not KAKAO_API_KEY:
+    raise ValueError("KAKAO_API_KEY 환경변수가 필요합니다")
 KAKAO_DIRECTIONS_API_URL = "https://apis-navi.kakaomobility.com/v1/directions"
 
 # 시스템 기본 설정
